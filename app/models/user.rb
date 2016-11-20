@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :plan
   
+  has_one :profile
+  
   attr_accessor :stripe_card_token
+  
   def save_with_payment
     if valid?
       customer = Stripe::Customer.create(description: email, plan: plan_id, card: stripe_card_token) #using the stripe gem to send out information to Stripe and it create the customer nd return them id ( customer.id)
